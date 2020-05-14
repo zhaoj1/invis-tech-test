@@ -8,5 +8,10 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "dot-env": "0.0.1",
+    "gitignore": "^0.6.0",
+    "node-fetch": "^2.6.0"
+  }
 }
