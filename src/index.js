@@ -16,11 +16,11 @@ async function weatherAPICall(latlon){
   .then(data => {
     if(data.status == 200){
       return data.json()
-    }else{
+    }else if(data.status == 400){
       throw new Error('Something went wrong. Please try again.')
     }
   })
-  
+
   const weatherInfo = await weatherResp.main.temp
   console.log('Temp: ', Math.round(weatherInfo) + '\xB0F' )
 }
@@ -29,12 +29,11 @@ async function geocodeAPICall(input){
   const response = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${input}&key=` + process.env.REACT_APP_OCD_API_KEY).then(resp => resp.json())
   let timezoneInfo = await response.results[0].annotations.timezone.name
   let latlon = await response.results[0].geometry
+  console.log('Input: ', response.results[0].formatted)
   logTime(timezoneInfo)
-  weatherAPICall(latlon)
+  weatherAPICall(latlon).catch(error => console.log(error))
 }
 
 logTimeWeather(
   'new york, ny 10004'
 )
-
-weatherAPICall({lat: 'a', lng: 'a'})
